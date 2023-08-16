@@ -76,7 +76,7 @@ if __name__ == '__main__':
     highways_list = [item for sublist in results for item in sublist]
 
     for highway in highways_list:
-        print(ET.tostring(highway, pretty_print=True).decode('utf-8')
+        print(ET.tostring(highway, pretty_print=True).decode('utf-8'))
 
 #search for the roadways
 findword = 'highways'
@@ -93,11 +93,11 @@ findword = 'highways'
 
 ###2. Read in the XML data
 #import the saved planetary data for the city of minneapolis
-minneapolis = ET.parse(sys.argv[1]).getroot()
+# minneapolis = ET.parse(sys.argv[1]).getroot()
 
 ###3. Search for highways,
     ###a. Save the highways into an array, save only the way ID
-highways = simple_extract_highways(sys.argv[1])
+# highways = simple_extract_highways(sys.argv[1])
 
 ###4. Maybe save the highway information into a SQL table
 
