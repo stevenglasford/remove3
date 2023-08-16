@@ -6,19 +6,24 @@ from concurrent.futures import ProcessPoolExecutor
 
 ### Set concurrency chunk size
 chunk_size = 1000000
+super_filename = "minneapolis.osm"
+#super_filename = sys.argv[1]
 
 
 def find_highways_in_chunk(chunk):
+    parser = ET.XMLParser(recover = True) #for testing purposes
+    tree = ET.fromstring('<osm>' + chunk + '</osm>', parser=parser)  # wrap chunk in a root element
+
     highways = []
-    root = ET.fromstring(chunk)
-    
-    # Iterate through all the ways in this chunk
-    for way in root.findall('way'):
-        for tag in way.findall('tag'):
-            if tag.get('k') == 'highway':
-                highways.append(way)
-                break
-                
+    for way in tree.xpath('//way[tag[@k="highway"]]'):
+        # Add the way to the highways list
+        highways.append(way)
+        
+        # Extract and print the street name
+        street_name_tag = way.xpath('tag[@k="name"]')
+        if street_name_tag:
+            print(street_name_tag[0].attrib['v'])  # print the value of the name tag
+
     return highways
 
 def simple_extract_highways(filename):
@@ -69,14 +74,16 @@ def extract_highways_parallel(filename, num_processes=None):
     return highways
 
 if __name__ == '__main__':
-    with ProcessPoolExecutor as executor:
-        chunks = split_file_into_chunks(sys.argv[1])
+    with ProcessPoolExecutor() as executor:
+        chunks = split_file_into_chunks(super_filename, chunk_size)
         results = list(executor.map(find_highways_in_chunk, chunks))
 
     highways_list = [item for sublist in results for item in sublist]
 
-    for highway in highways_list:
-        print(ET.tostring(highway, pretty_print=True).decode('utf-8'))
+
+#For testing purposes
+for highway in highways_list:
+    print(ET.tostring(highway, pretty_print=True).decode('utf-8'))
 
 #search for the roadways
 findword = 'highways'
