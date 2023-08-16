@@ -2,7 +2,9 @@
 from lxml import etree as ET
 import sys
 import os
+import time
 from concurrent.futures import ProcessPoolExecutor
+
 
 ### Set concurrency chunk size
 chunk_size = 1000000
@@ -73,20 +75,29 @@ def extract_highways_parallel(filename, num_processes=None):
 
     return highways
 
+starttime=time.perf_counter()
 if __name__ == '__main__':
     with ProcessPoolExecutor() as executor:
         chunks = split_file_into_chunks(super_filename, chunk_size)
         results = list(executor.map(find_highways_in_chunk, chunks))
 
     highways_list = [item for sublist in results for item in sublist]
+    
+    #For testing purposes
+    for highway in highways_list:
+        print(ET.tostring(highway, pretty_print=True).decode('utf-8'))
 
+endtime=time.perf_counter()
 
-#For testing purposes
-for highway in highways_list:
-    print(ET.tostring(highway, pretty_print=True).decode('utf-8'))
+simplerstart=time.perf_counter()
+simple_extract_highways(super_filename)
+simpleend=time.perf_counter
 
 #search for the roadways
 findword = 'highways'
+
+print(f"Processed all concurrency data in {starttime - endtime:0.4f} seconds")
+print(f"Processed all simple data in {simplerstart - simpleend:0.4f} seconds")
 
 
 #findIt = tree.xpath()
