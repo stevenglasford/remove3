@@ -32,14 +32,14 @@ fi
 if test -f "${MAIN_FILE}.sql"; then
     #SQL file has been dumped and can be loaded into the computer
     #Check to see if the osm information is loaded into postgres
-    if [ psql -lqt | cut -d \| -f 1 | grep -qw osm ]; then
+    if psql -lqt | cut -d \| -f 1 | grep -qw osm; then
         echo "The OSM database exists, I will just use that one"
     else
         echo "The OSM database backup exists, but it hasn't been loaded yet, I will load it for you"
         echo "I will make a new database called osm, if you don't to do that please refuse the password"
         psql -h localhost -d osm -U postgres -W -f ${MAIN_FILE}.sql
     fi
-then
+else
     #osm2pgsql has not been ran, it must be ran
     osm2pgsql -c -d osm -U postgres -H localhost $MAIN_FILE -W
     # osm2pgsql -c -d osm -U postgres -H localhost ./minneapolis.osm
