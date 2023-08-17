@@ -34,3 +34,5 @@ select way from planet_osm_roads where name is not null limit 1;
 --  way    | box2df | yes  | way        | plain   | 
 -- gist, for table "public.planet_osm_roads"
 -- Options: fillfactor=100
+
+select 
