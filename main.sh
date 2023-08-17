@@ -8,6 +8,7 @@
 #2. osm2pgsql https://osm2pgsql.org/
 #3. python
 #4. raw OSM data, included in this repo is the OSM data for the city of Minneapolis
+#5. postgis
 
 #Check to see if the information was already parsed using osm2pgsql
 MAIN_FILE=./minneapolis.osm #hardcode the file for testing
@@ -57,6 +58,7 @@ else
     pg_dump -U $PG_USER -h $PG_HOST -p 5432 -d $DATABASE_NAME > ${MAIN_FILE}.sql
 fi
 
-##usage: python alters_sql.py <database> <DB_user> <DB_host> <DB_port> <DB_password> <output_filename>
+##create the postgis extension in postgis
+psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION postgis;'
 
 python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD "${MAIN_FILE}.remove3.osm"
