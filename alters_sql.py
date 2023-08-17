@@ -1,0 +1,1 @@
+##Load the outcome osm2psql
