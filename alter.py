@@ -1,3 +1,10 @@
+####Update 8-17-2023: This method of using many cores is not very efficient for large datasets
+####This is okay for medium datasets (under 100mb)
+####Will use SQL to query instead, postgres is always hyperfast and loads well and is very stable
+
+
+
+
 ###Usage: altering_minneapolis.py <osm_file>
 from lxml import etree as ET
 import sys

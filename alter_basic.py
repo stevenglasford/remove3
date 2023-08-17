@@ -1,3 +1,8 @@
+####Update: This script is not really the best method to do this, it is too finicky
+
+
+
+
 ###Usage: altering_minneapolis.py <osm_file>
 from lxml import etree as ET
 import sys
