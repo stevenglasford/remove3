@@ -1,3 +1,5 @@
+#usage: main.sh <osm_file> <postgres_user> <postgres_password> <pg_host> <pg_port> <postgres_DB_name>
+
 #This file contains the controlling aspects of the remove3 program
 #Check if there is already a conversion from the OSM to psql
 
@@ -10,8 +12,16 @@
 #Check to see if the information was already parsed using osm2pgsql
 MAIN_FILE=./minneapolis.osm #hardcode the file for testing
 #MAIN_FILE=$1 #Use the first command line argument in production
+PG_USER="postgres"
+# PG_USER=$2
 PG_PASSWORD="minneapolis"
-# PG_PASSWORD=$2 #The postgres password should be the second command line argument
+# PG_PASSWORD=$3 #The postgres password should be the second command line argument
+PG_HOST="localhost"
+# PG_HOST=$4
+PG_PORT=5432
+# PG_PORT=$5
+DATABASE_NAME="osm"
+# DATABASE_NAME=$6
 
 #check to see if the postgres is installed and everything
 if [ pg_isready ]; then
@@ -32,18 +42,21 @@ fi
 if test -f "${MAIN_FILE}.sql"; then
     #SQL file has been dumped and can be loaded into the computer
     #Check to see if the osm information is loaded into postgres
-    if psql -lqt | cut -d \| -f 1 | grep -qw osm; then
+    if psql -lqt | cut -d \| -f 1 | grep -qw $DATABASE_NAME; then
         echo "The OSM database exists, I will just use that one"
     else
         echo "The OSM database backup exists, but it hasn't been loaded yet, I will load it for you"
         echo "I will make a new database called osm, if you don't to do that please refuse the password"
-        psql -h localhost -d osm -U postgres -W -f ${MAIN_FILE}.sql
+        psql -h $PG_HOST -d $DATABASE_NAME -U $PG_USER -W -f ${MAIN_FILE}.sql
     fi
 else
     #osm2pgsql has not been ran, it must be ran
-    osm2pgsql -c -d osm -U postgres -H localhost $MAIN_FILE -W
+    osm2pgsql -c -d $DATABASE_NAME -U $PG_USER -H $PG_HOST $MAIN_FILE -W
     # osm2pgsql -c -d osm -U postgres -H localhost ./minneapolis.osm
     #export the database to a sql file so it is able to revisited
-    pg_dump -U postgres -h localhost -p 5432 -d osm > ${MAIN_FILE}.sql
+    pg_dump -U $PG_USER -h $PG_HOST -p 5432 -d $DATABASE_NAME > ${MAIN_FILE}.sql
 fi
 
+##usage: python alters_sql.py <database> <DB_user> <DB_host> <DB_port> <DB_password> <output_filename>
+
+python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD "${MAIN_FILE}.remove3.osm"
