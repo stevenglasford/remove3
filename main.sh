@@ -14,5 +14,14 @@ if test -f "${MAIN_FILE}.sql"; then
     #SQL file has been dumped and can be loaded into the computer
     #Check to see if the osm information is loaded into postgres
 then 
+    #check to see if postgres is installed
+
+    #check to see if postgres is initialized
+    pg_isready
+
+
     #osm2pgsql has not been ran, it must be ran
+    osm2pgsql -c -d osm -U postgres -H localhost $MAIN_FILE
+    # osm2pgsql -c -d osm -U postgres -H localhost ./minneapolis.osm
+
 fi
