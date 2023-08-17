@@ -3,6 +3,7 @@ from lxml import etree as ET
 import sys
 import os
 import time
+import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
 
 
