@@ -21,7 +21,7 @@ then
 
 
     #osm2pgsql has not been ran, it must be ran
-    osm2pgsql -c -d osm -U postgres -H localhost $MAIN_FILE
+    osm2pgsql -c -d osm -U postgres -H localhost $MAIN_FILE -W
     # osm2pgsql -c -d osm -U postgres -H localhost ./minneapolis.osm
 
 fi
