@@ -35,4 +35,54 @@ select way from planet_osm_roads where name is not null limit 1;
 -- gist, for table "public.planet_osm_roads"
 -- Options: fillfactor=100
 
-select 
+
+--- An interesting query from chatgpt it tries to select the roadways that form a grid
+WITH RoadIntersections AS (
+    SELECT
+        a.osm_id AS road1,
+        b.osm_id AS road2,
+        ST_Intersection(a.way, b.way) AS intersection
+    FROM
+        planet_osm_line a
+    JOIN planet_osm_line b ON ST_Intersects(a.way, b.way)
+    WHERE
+        a.highway IS NOT NULL AND
+        b.highway IS NOT NULL AND
+        a.osm_id < b.osm_id  -- Avoid duplicate intersections
+),
+
+GridIntersections AS (
+    SELECT
+        road1,
+        road2,
+        intersection,
+        -- Calculate the angle between the roads using the dot product
+        DEGREES(ACOS(
+            ST_Dot(ST_StartPoint(a.way) - ST_EndPoint(a.way),
+                   ST_StartPoint(b.way) - ST_EndPoint(b.way)) /
+            (ST_Length(a.way) * ST_Length(b.way))
+        )) AS angle
+    FROM
+        RoadIntersections
+    JOIN planet_osm_line a ON RoadIntersections.road1 = a.osm_id
+    JOIN planet_osm_line b ON RoadIntersections.road2 = b.osm_id
+)
+
+SELECT
+    road1,
+    road2,
+    intersection
+FROM
+    GridIntersections
+WHERE
+    -- Check if the angle is close to 90 degrees (with some tolerance)
+    ABS(angle - 90) < 5;
+
+--Select all of the roadways that need to be converted into arterials
+
+--Select all of the roadways that need to be converted into northbound
+
+
+--Select all of the roadways that need to be converted into southbound
+
+--Select all of the roadways that need to be converted into VIP
