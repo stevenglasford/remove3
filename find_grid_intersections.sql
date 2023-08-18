@@ -19,13 +19,15 @@ GridIntersections AS (
         intersection,
         -- Calculate the angle between the roads using the dot product
         DEGREES(ACOS(
-            (ST_X(ST_StartPoint(a.way)) - ST_X(ST_EndPoint(a.way))) * 
-            (ST_X(ST_StartPoint(b.way)) - ST_X(ST_EndPoint(b.way))) +
-            (ST_Y(ST_StartPoint(a.way)) - ST_Y(ST_EndPoint(a.way))) * 
-            (ST_Y(ST_StartPoint(b.way)) - ST_Y(ST_EndPoint(b.way)))
-            /
-            (ST_Distance(ST_StartPoint(a.way), ST_EndPoint(a.way)) *
-             ST_Distance(ST_StartPoint(b.way), ST_EndPoint(b.way)))
+            LEAST(GREATEST(
+                (ST_X(ST_StartPoint(a.way)) - ST_X(ST_EndPoint(a.way))) * 
+                (ST_X(ST_StartPoint(b.way)) - ST_X(ST_EndPoint(b.way))) +
+                (ST_Y(ST_StartPoint(a.way)) - ST_Y(ST_EndPoint(a.way))) * 
+                (ST_Y(ST_StartPoint(b.way)) - ST_Y(ST_EndPoint(b.way)))
+                /
+                (ST_Distance(ST_StartPoint(a.way), ST_EndPoint(a.way)) *
+                ST_Distance(ST_StartPoint(b.way), ST_EndPoint(b.way))),
+            -1), 1)  -- Clamping the value to [-1, 1]
         )) AS angle
     FROM
         RoadIntersections
