@@ -12,25 +12,6 @@ WITH RoadIntersections AS (
         a.osm_id < b.osm_id  -- Avoid duplicate intersections
 ),
 
-The error you're encountering is because PostGIS (and PostgreSQL) doesn't support the - operator for geometry data types. My apologies for that oversight.
-
-Instead of the direct - operation on geometries, you should be calculating the vector differences between the X and Y coordinates separately.
-
-Let's correct the angle calculation section. The angle between two vectors u=(x1,y1)u=(x1​,y1​) and v=(x2,y2)v=(x2​,y2​) can be computed as:
-angle=arccos⁡(u⋅v∣u∣∣v∣)angle=arccos(∣u∣∣v∣u⋅v​)
-Where:
-
-    u⋅vu⋅v is the dot product, calculated as x1×x2+y1×y2x1​×x2​+y1​×y2​.
-    ∣u∣∣u∣ is the magnitude (or length) of vector uu, calculated as x12+y12x12​+y12​
-
-    ​, and similarly for ∣v∣∣v∣.
-
-The dot product and the magnitudes must be calculated using the actual X and Y differences of the starting and ending points of the lines.
-
-Here's the corrected SQL section:
-
-sql
-
 GridIntersections AS (
     SELECT
         road1,
