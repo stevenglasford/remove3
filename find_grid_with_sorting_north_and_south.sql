@@ -71,7 +71,9 @@ WITH GridSelection AS (-- Assuming the previous GridIntersections CTE is already
         (SELECT 
             way
         FROM planet_osm_line pol
-        WHERE pol.osm_id = t.road)
+        WHERE pol.osm_id = t.road
+        --If there are multiple returns then select the first as all of the entries will be homogeneous
+        LIMIT 1)
     FROM
         TotalIntersections t
     LEFT JOIN
