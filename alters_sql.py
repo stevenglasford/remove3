@@ -12,6 +12,8 @@ db_port=sys.argv[4]
 db_password=sys.argv[5]
 output_filename=sys.argv[6]
 
+
+#Fork two processes, one for getting of the North and South Bound 
 connection = psycopg2.connect(
         user=db_name,
         password=db_password,
@@ -28,3 +30,4 @@ with connection:
 
 #ensure the connection closes at the end
 connection.close()
+
