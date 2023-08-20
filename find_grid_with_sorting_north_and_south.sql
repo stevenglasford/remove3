@@ -101,8 +101,8 @@ NorthSouthRoads AS (
     FROM 
         RoadOrientations
     WHERE 
-        (ABS(orientation_angle - 90) < 15) OR 
-        (ABS(orientation_angle + 90) < 15)
+        (ABS(orientation_angle - 90) < 45) OR 
+        (ABS(orientation_angle + 90) < 45)
 ),
 
 -- Find the minimum longitude for each north-south road
