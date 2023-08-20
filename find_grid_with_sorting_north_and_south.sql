@@ -94,6 +94,17 @@ RoadOrientations AS (
         GridSelection
 ),
 
+-- Filter for north-south roads
+NorthSouthRoads AS (
+    SELECT 
+        *
+    FROM 
+        RoadOrientations
+    WHERE 
+        (ABS(orientation_angle - 90) < 15) OR 
+        (ABS(orientation_angle + 90) < 15)
+),
+
 -- Find the minimum longitude for each north-south road
 MinLongitude AS (
     SELECT 
