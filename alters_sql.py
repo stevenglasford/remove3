@@ -5,6 +5,7 @@
 import sys
 import psycopg2
 import multiprocessing
+import xml.etree.ElementTree as ET
 
 def makeEastWestGrid(connection):
     with connection: 
@@ -107,24 +108,35 @@ with connection:
         EWV = cursor.fetchall()
 
 tree = ET.parse()
-def NSSouth(root):
+osmroot = tree.getroot()
+
+def NSSouth(root, roads):
     ##Create a temporary dictionary for altering
-    node_data = {}
+    for road in roads:
+        ##Create a temporary dictionary for altering
+        node_data = {}
+
+        ## get all of the nodes for the particular road
+        for node in root.findall('node'):
+            osm_id = node.get('id')
+            lat = float(node.get('lat'))
+            node_data[osm_id] = lat
 
 
+#########NOTICE########
+#Please drop all of the following processing tables once complete
+#NorthSouthVip
+#EastWestVip
+#EastWestArterial
+#NorthSouthArterial
+#EastWestNorth
+#EastWestSouth
+#NorthSouthNorth
+#NorthSouthSouth
+#eastwestgrid
+#northsouthgrid
 
 
-
-
-
-NSAP = multiprocessing.Process(target=NSArterials(osmroot))
-NSSP = multiprocessing.Process(target=NSSouth(osmroot))
-NSNP
-NSVP
-EWAP
-EWSP
-EWNP
-EWVP
 
 #ensure the connection closes at the end
 connection.close()
