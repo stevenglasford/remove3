@@ -123,11 +123,11 @@ MinLatitude AS (
         osm_id
 )
 
--- Finally, sort the north-south roads from west to east based on minimum longitude
+-- Finally, sort the east-west roads from north to sort based on minimum latitude
 SELECT 
     m.osm_id, 
-    m.min_longitude
+    m.min_latitude
 FROM 
-    MinLongitude m
+    MinLatitude m
 ORDER BY 
-    m.min_longitude ASC;
+    m.min_latitude ASC;
