@@ -13,7 +13,7 @@ db_password=sys.argv[5]
 output_filename=sys.argv[6]
 
 
-#Fork two processes, one for getting of the North and South Bound 
+#Fork two processes, one for getting of the North and South Bound another for the east and west
 connection = psycopg2.connect(
         user=db_name,
         password=db_password,
