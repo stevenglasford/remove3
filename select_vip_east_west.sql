@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS EastWestVip;
+CREATE TABLE EastWestVip AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,

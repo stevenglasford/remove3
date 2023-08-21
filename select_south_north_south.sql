@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS NorthSouthSouth;
+CREATE TABLE NorthSouthSouth AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,

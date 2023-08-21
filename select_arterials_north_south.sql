@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS NorthSouthArterials;
+CREATE TABLE NorthSouthArterials AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,

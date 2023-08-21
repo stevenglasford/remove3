@@ -1,3 +1,7 @@
+-- Save the results for faster speeds
+DROP TABLE IF EXISTS EastWestArterials;
+CREATE EXISTS EastWestArterials AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,

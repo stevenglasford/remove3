@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS NorthSouthVip;
+CREATE TABLE NorthSouthVip AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,

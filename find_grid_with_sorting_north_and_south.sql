@@ -1,5 +1,23 @@
 -- Create a new table to store the northsouthgrid so it doesn't need to recompute multiple times
-CREATE TABLE IF NOT EXISTS northsouthgrid AS 
+-- CREATE TABLE IF NOT EXISTS northsouthgrid AS 
+--Check if the tempdatabase exists
+-- DO $$
+-- BEGIN 
+--     IF NOT EXISTS (
+--         SELECT FROM information_schema.tables
+--         WHERE table_name = 'northsouthgrid'
+--     )
+--     THEN
+--         CREATE TABLE northsouthgrid
+--     ELSE
+--         DELETE FROM northsouthgrid;
+--         INSERT INTO northsouthgrid
+--     END IF;
+-- END $$;
+DROP TABLE IF EXISTS northsouthgrid;
+
+-- Insert new records
+CREATE TABLE northsouthgrid AS
 
 WITH GridSelection AS (-- Assuming the previous GridIntersections CTE is already there
     WITH RoadIntersections AS (

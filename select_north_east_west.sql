@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS EastWestNorth;
+CREATE EastWestNorth AS 
+
 WITH NumberedRows AS (
     SELECT
         osm_id,
