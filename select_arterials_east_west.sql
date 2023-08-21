@@ -7,7 +7,8 @@ WITH NumberedRows AS (
         osm_id,
         min_latitude,
         ROW_NUMBER() OVER (ORDER BY osm_id) AS rn,
-        LEAD(min_latitude, 1) OVER (ORDER BY osm_id) as next_lat
+        LEAD(min_latitude, 1) OVER (ORDER BY osm_id) as next_lat,
+        way
     FROM
         eastwestgrid AS SortedRoads
 ),
@@ -15,7 +16,8 @@ WITH NumberedRows AS (
 SelectArterials AS (
     SELECT 
         osm_id,
-        min_latitude
+        min_latitude,
+        way
     FROM
         NumberedRows
     WHERE
@@ -23,6 +25,7 @@ SelectArterials AS (
 )
 
 SELECT
-    osm_id
+    osm_id,
+    way
 FROM 
     SelectArterials;

@@ -115,7 +115,8 @@ EastWestRoads AS (
 MinLatitude AS (
     SELECT 
         osm_id, 
-        MIN(ST_Y(ST_StartPoint(way))) AS min_latitude
+        MIN(ST_Y(ST_StartPoint(way))) AS min_latitude,
+        way
     FROM 
         GridSelection
     WHERE 
@@ -127,7 +128,8 @@ MinLatitude AS (
 -- Finally, sort the east-west roads from north to sort based on minimum latitude
 SELECT 
     m.osm_id, 
-    m.min_latitude
+    m.min_latitude,
+    m.way
 FROM 
     MinLatitude m
 ORDER BY 

@@ -132,7 +132,8 @@ NorthSouthRoads AS (
 MinLongitude AS (
     SELECT 
         osm_id, 
-        MIN(ST_X(ST_StartPoint(way))) AS min_longitude
+        MIN(ST_X(ST_StartPoint(way))) AS min_longitude,
+        way
     FROM 
         GridSelection
     WHERE 
@@ -144,7 +145,8 @@ MinLongitude AS (
 -- Finally, sort the north-south roads from west to east based on minimum longitude
 SELECT 
     m.osm_id, 
-    m.min_longitude
+    m.min_longitude,
+    m.way
 FROM 
     MinLongitude m
 ORDER BY 
