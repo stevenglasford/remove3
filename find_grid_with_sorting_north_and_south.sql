@@ -1,3 +1,6 @@
+-- Create a new table to store the northsouthgrid so it doesn't need to recompute multiple times
+CREATE TABLE IF NOT EXISTS northsouthgrid AS 
+
 WITH GridSelection AS (-- Assuming the previous GridIntersections CTE is already there
     WITH RoadIntersections AS (
         SELECT
