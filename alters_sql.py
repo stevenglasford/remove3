@@ -25,7 +25,8 @@ db_user=sys.argv[2]
 db_host=sys.argv[3]
 db_port=sys.argv[4]
 db_password=sys.argv[5]
-output_filename=sys.argv[6]
+input_file=sys.argv[6]
+output_filename=sys.argv[7]
 
 #Fork two processes, one for getting of the North and South Bound another for the east and west
 connection = psycopg2.connect(
@@ -104,6 +105,26 @@ with connection:
         cursor.execute()
         ##Also fetchall fetchmany fetchall
         EWV = cursor.fetchall()
+
+tree = ET.parse()
+def NSSouth(root):
+    ##Create a temporary dictionary for altering
+    node_data = {}
+
+
+
+
+
+
+
+NSAP = multiprocessing.Process(target=NSArterials(osmroot))
+NSSP = multiprocessing.Process(target=NSSouth(osmroot))
+NSNP
+NSVP
+EWAP
+EWSP
+EWNP
+EWVP
 
 #ensure the connection closes at the end
 connection.close()
