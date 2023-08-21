@@ -1,27 +1,23 @@
--- This query alters and installs the North/South southbound roads
+-- Start the transaction
 BEGIN;
 
--- Update the geometry. NEED TO DO: CHECK THE EXISTING DIRECTION OF THE ROAD
+-- Update the planet_osm_line table based on the roads_info table for roads that are already North to South
 UPDATE planet_osm_line
--- SET way = ST_Reverse(way)
+SET way = planet_osm_line.way,  -- Replace with any additional columns you may want to update
+    oneway = 'yes'  -- Mark as one-way
+FROM roads_info
+WHERE 
+    planet_osm_line.osm_id = roads_info.osm_id AND
+    ST_Y(ST_StartPoint(planet_osm_line.way)) > ST_Y(ST_EndPoint(planet_osm_line.way));
 
-
-WHERE osm_id IN (SELECT osm_id from NorthSouthSouth);
----Can use the PostGIS command ST_StartPoint
----Can use the PostGIS command ST_EndPoint
-
---Check the direction of the road
-
-
---Update the oneway attribute
+-- Update the planet_osm_line table based on the roads_info table for roads that are South to North
 UPDATE planet_osm_line
-SET oneway = CASE
-                WHEN oneway = 'yes' THEN '-1'
-                WHEN oneway = '-1'  THEN 'yes'
-                ---not sure if this correct
-                ELSE oneway
-            END
-WHERE osm_id IN (SELECT osm_id FROM NorthSouthSouth);
+SET way = ST_Reverse(planet_osm_line.way),  -- Reverse the way geometry
+    oneway = 'yes'  -- Mark as one-way
+FROM roads_info
+WHERE 
+    planet_osm_line.osm_id = roads_info.osm_id AND
+    ST_Y(ST_StartPoint(planet_osm_line.way)) < ST_Y(ST_EndPoint(planet_osm_line.way));
 
--- Commit to the transactions
+-- Commit the transaction
 COMMIT;
