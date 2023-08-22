@@ -124,7 +124,8 @@ MinLatitude AS (
     WHERE 
         osm_id IN (SELECT osm_id FROM EastWestRoads)
     GROUP BY 
-        osm_id
+        osm_id,
+        way
 )
 
 -- Finally, sort the east-west roads from north to sort based on minimum latitude
