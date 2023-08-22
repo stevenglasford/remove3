@@ -107,7 +107,7 @@ with connection:
     with connection.cursor() as cursor:
         with open("select_vip_east_west.sql", "r") as f:
             SEWV = f.read()
-        cursor.execute(SEWS)
+        cursor.execute(SEWV)
 
 ##Alter the SQL table
 with connection:
