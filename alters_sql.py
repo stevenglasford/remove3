@@ -110,27 +110,16 @@ with connection:
 ##Alter the SQL table
 with connection:
     with connection.cursor() as cursor:
-        with connection.cursor() as cursor:
-            with open("alters.sql", "r") as f:
-                alters = f.read()
-            cursor.execute(alters)
+        with open("alters.sql", "r") as f:
+            alters = f.read()
+        cursor.execute(alters)
 
-
-
-#########NOTICE########
-#Please drop all of the following processing tables once complete
-#NorthSouthVip
-#EastWestVip
-#EastWestArterial
-#NorthSouthArterial
-#EastWestNorth
-#EastWestSouth
-#NorthSouthNorth
-#NorthSouthSouth
-#eastwestgrid
-#northsouthgrid
-
-
+##Clean up the temporary tables made for speed enhancments
+with connection:
+    with connection.cursor() as cursor:
+        with open('littletablecleanup.sql', 'r') as f:
+            cleanup = f.read()
+        cursor.execute(cleanup)
 
 #ensure the connection closes at the end
 connection.close()
