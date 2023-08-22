@@ -9,6 +9,7 @@
 #3. python
 #4. raw OSM data, included in this repo is the OSM data for the city of Minneapolis
 #5. postgis
+#6. osmosis
 
 #Check to see if the information was already parsed using osm2pgsql
 MAIN_FILE=./minneapolis.osm #hardcode the file for testing
@@ -23,6 +24,8 @@ PG_PORT=5432
 # PG_PORT=$5
 DATABASE_NAME="osm"
 # DATABASE_NAME=$6
+OUTPUT_FILE="minneapolis.alters.osm"
+# OUTPUT_FILE=$7
 
 #check to see if the postgres is installed and everything
 if [ pg_isready ]; then
@@ -62,3 +65,6 @@ fi
 psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION postgis;'
 
 python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD $MAIN_FILE "${MAIN_FILE}.remove3.osm"
+
+##pull out the altered osm file and save it
+osmosis --read-pgsql host=$PG_HOST database=$DATABASE_NAME user=$PG_USER password=$PG_PASSWORD --write-xml file=$OUTPUT_FILE
