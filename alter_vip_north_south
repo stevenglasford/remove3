@@ -1,0 +1,14 @@
+-- Start the transaction
+BEGIN;
+
+---The closest thing to a VIP road is a "living_street" category, which I guess why not just call it that rather than anything else
+
+-- Update the planet_osm_line table based on the NorthSouthVip  table for roads that are already North to South
+UPDATE planet_osm_line
+SET oneway = 'no'  -- Mark as one-way
+    highway = 'living_street'
+FROM NorthSouthVip
+WHERE 
+    planet_osm_line.osm_id = roads_info.osm_id;
+
+COMMIT;

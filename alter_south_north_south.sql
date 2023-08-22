@@ -1,16 +1,15 @@
 -- Start the transaction
 BEGIN;
 
--- Update the planet_osm_line table based on the roads_info table for roads that are already North to South
+-- Update the planet_osm_line table based on the roads_info table for roads that are already South to North
 UPDATE planet_osm_line
-SET way = planet_osm_line.way,  -- Replace with any additional columns you may want to update
-    oneway = 'yes'  -- Mark as one-way
+SET oneway = 'yes'  -- Mark as one-way
 FROM NorthSouthSouth
 WHERE 
     planet_osm_line.osm_id = NorthSouthSouth.osm_id AND
     ST_Y(ST_StartPoint(planet_osm_line.way)) > ST_Y(ST_EndPoint(planet_osm_line.way));
 
--- Update the planet_osm_line table based on the roads_info table for roads that are South to North
+-- Update the planet_osm_line table based on the roads_info table for roads that are North to South
 UPDATE planet_osm_line
 SET way = ST_Reverse(planet_osm_line.way),  -- Reverse the way geometry
     oneway = 'yes'  -- Mark as one-way
