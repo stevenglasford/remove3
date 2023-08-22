@@ -52,75 +52,69 @@ EWQ.join()
 
 
 #get all of the northsouth arterials
-with connection:
+with connection: 
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        NSA = cursor.fetchall()
+        with open("select_arterials_north_south.sql", "r") as f:
+            SNSA = f.read()
+        cursor.execute(SNSA)
 
 #get all of the northsouth Norths
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        NSN = cursor.fetchall()
+        with open("select_north_north_south.sql", "r") as f:
+            SNSN = f.read()
+        cursor.execute(SNSN)
 
 #get all of the northsouth Souths
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        NSS = cursor.fetchall()
+        with open("select_south_north_south.sql", "r") as f:
+            SNSS = f.read()
+        cursor.execute(SNSS)
 
 #get all of the northsouth VIP
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        NSV = cursor.fetchall()
+        with open("select_vip_north_south.sql", "r") as f:
+            SNSV = f.read()
+        cursor.execute(SNSV)
 
 #get all of the eastwest arterials
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        EWA = cursor.fetchall()
+        with open("select_arterials_east_west.sql", "r") as f:
+            SEWA = f.read()
+        cursor.execute(SEWA)
 
 #get all of the eastwest easts
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        EWE = cursor.fetchall()
+        with open("select_north_east_west.sql", "r") as f:
+            SEWN = f.read()
+        cursor.execute(SEWN)
 
 #get all of the eastwest wests
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        EWW = cursor.fetchall()
+        with open("select_south_east_west.sql", "r") as f:
+            SEWS = f.read()
+        cursor.execute(SEWS)
 
 #get all of the eastwest VIP
 with connection:
     with connection.cursor() as cursor:
-        cursor.execute()
-        ##Also fetchall fetchmany fetchall
-        EWV = cursor.fetchall()
+        with open("select_vip_east_west.sql", "r") as f:
+            SEWV = f.read()
+        cursor.execute(SEWS)
 
-tree = ET.parse()
-osmroot = tree.getroot()
+##Alter the SQL table
+with connection:
+    with connection.cursor() as cursor:
+        with connection.cursor() as cursor:
+            with open("alters.sql", "r") as f:
+                alters = f.read()
+            cursor.execute(alters)
 
-def NSSouth(root, roads):
-    ##Create a temporary dictionary for altering
-    for road in roads:
-        ##Create a temporary dictionary for altering
-        node_data = {}
-
-        ## get all of the nodes for the particular road
-        for node in root.findall('node'):
-            osm_id = node.get('id')
-            lat = float(node.get('lat'))
-            node_data[osm_id] = lat
 
 
 #########NOTICE########
