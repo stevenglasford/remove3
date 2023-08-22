@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS NorthSouthSouth;
-CREATE TABLE NorthSouthSouth AS 
+DROP TABLE IF EXISTS NorthSouthNorth;
+CREATE TABLE NorthSouthNorth AS 
 
 WITH NumberedRows AS (
     SELECT

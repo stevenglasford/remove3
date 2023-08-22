@@ -45,7 +45,7 @@ WHERE
 -------------------NorthSouth VIP Bound altering-------------------------------------------------
 -- Update the planet_osm_line table based on the NorthSouthVip  table for roads that are already North to South
 UPDATE planet_osm_line
-SET oneway = 'no'  -- Mark as one-way
+SET oneway = 'no', -- Mark as one-way
     highway = 'living_street'
 FROM NorthSouthVip
 WHERE 
@@ -89,7 +89,7 @@ WHERE
 -------------------EastWest VIP Bound altering-------------------------------------------------
 -- Update the planet_osm_line table based on the NorthSouthVip  table for roads that are already North to South
 UPDATE planet_osm_line
-SET oneway = 'no'
+SET oneway = 'no',
     highway = 'living_street'
 FROM EastWestVip
 WHERE 

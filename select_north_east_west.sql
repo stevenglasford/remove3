@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS EastWestNorth;
-CREATE EastWestNorth AS 
+CREATE TABLE EastWestNorth AS 
 
 WITH NumberedRows AS (
     SELECT
@@ -14,7 +14,7 @@ WITH NumberedRows AS (
 SelectArterials AS (
     SELECT 
         osm_id,
-        min_latitude,
+        min_latitude
 
     FROM
         NumberedRows

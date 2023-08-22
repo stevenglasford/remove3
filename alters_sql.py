@@ -29,9 +29,11 @@ db_password=sys.argv[5]
 input_file=sys.argv[6]
 output_filename=sys.argv[7]
 
+print(db_password)
+
 #Fork two processes, one for getting of the North and South Bound another for the east and west
 connection = psycopg2.connect(
-        user=db_name,
+        user=db_user,
         password=db_password,
         host=db_host,
         port=db_port,
@@ -39,8 +41,8 @@ connection = psycopg2.connect(
 )
 
 #run the two grid queries simulataneously to increase speed
-NSQ = multiprocessing.Process(target=makeNorthSouthGrid)
-EWQ = multiprocessing.Process(target=makeEastWestGrid)
+NSQ = multiprocessing.Process(target=makeNorthSouthGrid(connection))
+EWQ = multiprocessing.Process(target=makeEastWestGrid(connection))
 
 ##Start the grid queries
 NSQ.start()

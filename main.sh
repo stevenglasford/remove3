@@ -62,8 +62,9 @@ else
 fi
 
 ##create the postgis extension in postgis
-psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION postgis;'
+psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 
+OUTPUT_FILE=${MAIN_FILE}.remove3.osm
 python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD $MAIN_FILE "${MAIN_FILE}.remove3.osm"
 
 ##pull out the altered osm file and save it

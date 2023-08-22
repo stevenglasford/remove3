@@ -139,7 +139,8 @@ MinLongitude AS (
     WHERE 
         osm_id IN (SELECT osm_id FROM NorthSouthRoads)
     GROUP BY 
-        osm_id
+        osm_id,
+        way
 )
 
 -- Finally, sort the north-south roads from west to east based on minimum longitude
