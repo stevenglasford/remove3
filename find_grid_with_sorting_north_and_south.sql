@@ -31,6 +31,8 @@ WITH GridSelection AS (-- Assuming the previous GridIntersections CTE is already
         WHERE
             a.highway IS NOT NULL AND
             b.highway IS NOT NULL AND
+            a.name IS NOT NULL AND
+            b.name IS NOT NULL AND
             a.osm_id < b.osm_id  AND -- Avoid duplicate intersections
             ST_Distance(ST_StartPoint(a.way), ST_EndPoint(a.way)) > 0 AND  -- filter "zero" roads
             ST_Distance(ST_StartPoint(b.way), ST_EndPoint(b.way)) > 0
