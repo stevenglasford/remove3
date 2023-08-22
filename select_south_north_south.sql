@@ -6,8 +6,7 @@ WITH NumberedRows AS (
         osm_id,
         min_longitude,
         ROW_NUMBER() OVER (ORDER BY osm_id) AS rn,
-        LEAD(min_longitude, 1) OVER (ORDER BY osm_id) as next_long,
-        way
+        LEAD(min_longitude, 1) OVER (ORDER BY osm_id) as next_long
     FROM
         northsouthgrid AS SortedRoads
 ),
@@ -15,8 +14,7 @@ WITH NumberedRows AS (
 SelectArterials AS (
     SELECT 
         osm_id,
-        min_longitude,
-        way
+        min_longitude
     FROM
         NumberedRows
     WHERE
@@ -24,7 +22,6 @@ SelectArterials AS (
 )
 
 SELECT
-    osm_id,
-    way
+    osm_id
 FROM 
     SelectArterials;
