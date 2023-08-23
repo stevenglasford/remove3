@@ -64,8 +64,8 @@ fi
 ##create the postgis extension in postgis
 psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 
-OUTPUT_FILE=${MAIN_FILE}.remove3.osm
-python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD $MAIN_FILE "${MAIN_FILE}.remove3.osm"
+OUTPUT_FILE="${MAIN_FILE}.remove3.osm"
+python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD $MAIN_FILE $OUTPUT_FILE
 
 ##pull out the altered osm file and save it
 osmosis --read-pgsql host=$PG_HOST database=$DATABASE_NAME user=$PG_USER password=$PG_PASSWORD --write-xml file=$OUTPUT_FILE
