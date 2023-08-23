@@ -1,7 +1,7 @@
 DROP TABLE NorthSouthVip;
 DROP TABLE EastWestVip;
-DROP TABLE EastWestArterial;
-DROP TABLE NorthSouthArterial;
+DROP TABLE EastWestArterials;
+DROP TABLE NorthSouthArterials;
 DROP TABLE EastWestNorth;
 DROP TABLE EastWestSouth;
 DROP TABLE NorthSouthNorth;
