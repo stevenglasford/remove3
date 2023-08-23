@@ -54,6 +54,9 @@ if test -f "${MAIN_FILE}.sql"; then
         psql -h $PG_HOST -d $DATABASE_NAME -U $PG_USER -W -f ${MAIN_FILE}.sql
     fi
 else
+    #Create the database
+    # psql -h localhost -U postgres -W -c "CREATE DATABASE IF NOT EXISTS osm_backup ;"
+    psql -h $PG_HOST -U $PG_USER -W -c "CREATE DATABASE $DATABASE_NAME ;"
     #osm2pgsql has not been ran, it must be ran
     osm2pgsql -c -d $DATABASE_NAME -U $PG_USER -H $PG_HOST $MAIN_FILE -W
     # osm2pgsql -c -d osm -U postgres -H localhost ./minneapolis.osm
@@ -62,6 +65,7 @@ else
 fi
 
 ##create the postgis extension in postgis
+# psql -h localhost -U postgres -d osm_backup -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 psql -h $PG_HOST -U $PG_USER -d $DATABASE_NAME -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 
 OUTPUT_FILE="${MAIN_FILE}.remove3.osm"
