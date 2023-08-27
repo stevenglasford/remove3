@@ -12,3 +12,11 @@ This program attempts several things
 TODO: in the near future I would also like to reroute all of the bus lines in the city in accordance with the remove3 principle of making express and local bus lines.
 
 Goals: Make this process utilize all cores on a machine and be super fast. Vrooom
+
+**********************************
+Update: 9-26-2023
+
+So far remove3 is actually running well. Currently I am testing to see if I can pull out the changes that were accomplished in the the main SQL calls.
+
+Next step is to connect it to glasford.io
+Not so sure how to do that yet, but I was thinking of just doing it in C# cus that is what the state of Minnesota government writes with. Though I might also make one in python.
