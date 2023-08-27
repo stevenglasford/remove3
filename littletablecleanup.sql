@@ -1,11 +1,13 @@
-DROP TABLE NorthSouthVip;
-DROP TABLE EastWestVip;
-DROP TABLE EastWestArterials;
-DROP TABLE NorthSouthArterials;
-DROP TABLE EastWestNorth;
-DROP TABLE EastWestSouth;
-DROP TABLE NorthSouthNorth;
-DROP TABLE NorthSouthSouth;
-DROP TABLE eastwestgrid;
-DROP TABLE northsouthgrid;
+--Use this table to clean up if needed
+
+-- NorthSouthVip;
+-- EastWestVip;
+-- EastWestArterials;
+-- NorthSouthArterials;
+-- EastWestNorth;
+-- EastWestSouth;
+-- NorthSouthNorth;
+-- NorthSouthSouth;
+-- eastwestgrid;
+-- northsouthgrid;
 
