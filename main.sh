@@ -72,4 +72,6 @@ OUTPUT_FILE="${MAIN_FILE}.remove3.osm"
 python alters_sql.py $DATABASE_NAME $PG_USER $PG_HOST $PG_PORT $PG_PASSWORD $MAIN_FILE $OUTPUT_FILE
 
 ##pull out the altered osm file and save it
-osmosis --read-pgsql host=$PG_HOST database=$DATABASE_NAME user=$PG_USER password=$PG_PASSWORD --write-xml file=$OUTPUT_FILE
+osmosis --read-apidb host=$PG_HOST database=$DATABASE_NAME user=$PG_USER password=$PG_PASSWORD --write-xml file=$OUTPUT_FILE
+
+##Delete the database once it is complete
