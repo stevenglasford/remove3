@@ -22,7 +22,9 @@ SelectArterials AS (
         (rn % 6 = 2 OR rn % 6 = 5) OR min_latitude = next_lat
 )
 
-SELECT
-    osm_id
-FROM 
-    SelectArterials;
+SELECT b.*
+from (SELECT
+        osm_id
+    FROM 
+        SelectArterials) a
+left join planet_osm_line b On a.osm_id=b.osm_id;

@@ -20,9 +20,7 @@ SelectArterials AS (
     WHERE
         rn % 3 = 0 OR min_latitude = next_lat
 )
-SELECT b.*
-from (SELECT
+SELECT
         osm_id
     FROM 
-        SelectArterials) a
-left join planet_osm_line b On a.osm_id=b.osm_id;
+        SelectArterials;
