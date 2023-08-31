@@ -86,3 +86,12 @@ WHERE
 --Select all of the roadways that need to be converted into southbound
 
 --Select all of the roadways that need to be converted into VIP
+
+--Select all of the roadways that are "straight", trying to remove curvy roads around the lakes
+SELECT 
+    road_name,
+    geometry
+FROM 
+    roads
+WHERE 
+    ST_Length(geometry) / ST_Distance(ST_StartPoint(geometry), ST_EndPoint(geometry)) >= 0.95;
