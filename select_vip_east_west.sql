@@ -24,7 +24,7 @@ SelectArterials AS (
 --Select living streets that already exists.
 SelectExistingVip AS (
     SELECT osm_id 
-    FROM`planet_osm_line` 
+    FROM planet_osm_line
     WHERE highway = 'living_street'
 ),
 
