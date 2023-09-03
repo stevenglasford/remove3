@@ -1,0 +1,11 @@
+After compiling and running remove3 I noticed that too many streets in the city are improperly labeled. 
+For example Lagoon in Uptown is not a living_street, yet it is labeled as such. 
+A classic living street is Nicollet Mall, this was one of the first to be invented in the USA
+
+Furthermore, most of the sidewalks and such are removed in this variant of the program (which is good)
+
+The lake roads are not fully removed.
+
+Too many cross roads are included in the analysis.
+
+Getting close
