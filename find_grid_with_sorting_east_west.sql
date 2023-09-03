@@ -12,8 +12,12 @@ WITH GridSelection AS (-- Assuming the previous GridIntersections CTE is already
             planet_osm_line a
         JOIN planet_osm_line b ON ST_Intersects(a.way, b.way)
         WHERE
-            a.highway IS NOT NULL AND
-            b.highway IS NOT NULL AND
+            --Only select the roadways, skip bike paths and other non-roadways
+            (a.highway = 'motorway' OR a.highway = 'corridor' OR a.highway = 'trunk' OR a.highway = 'secondary_link' OR a.highway='secondary_link' OR 
+            a.highway='tertiary' OR a.highway='tertiary_link' OR a.highway='residential' OR a.highway='primary_link' OR a.highway='primary' OR a.highway='motor_link') AND
+            (b.highway = 'motorway' OR b.highway = 'corridor' OR b.highway = 'trunk' OR b.highway = 'secondary_link' OR b.highway='secondary_link' OR
+            b.highway='tertiary' OR b.highway='tertiary_link' OR b.highway='residential' OR b.highway='primary_link' OR b.highway='primary' OR b.highway='motor_link') AND
+
             a.name IS NOT NULL AND
             b.name IS NOT NULL AND
             a.osm_id < b.osm_id  AND -- Avoid duplicate intersections
@@ -126,14 +130,30 @@ MinLatitude AS (
     GROUP BY 
         osm_id,
         way
+),
+
+--Filter out all of the curvy lake roads and other curvy roads
+Straightness AS (
+    SELECT 
+        osm_id,
+        min_latitude,
+        way
+    FROM 
+        MinLatitude
+    WHERE 
+        --Filter out the case when the denominator is zero
+        CASE 
+            WHEN ST_Distance(ST_StartPoint(way), ST_EndPoint(way)) = 0 THEN NULL
+            ELSE ST_Length(way) / ST_Distance(ST_StartPoint(way), ST_EndPoint(way))
+        END >= 0.95
 )
 
 -- Finally, sort the east-west roads from north to sort based on minimum latitude
 SELECT 
-    m.osm_id, 
-    m.min_latitude,
-    m.way
+    s.osm_id, 
+    s.min_latitude,
+    s.way
 FROM 
-    MinLatitude m
+    straightness s
 ORDER BY 
-    m.min_latitude ASC;
+    s.min_latitude ASC;
