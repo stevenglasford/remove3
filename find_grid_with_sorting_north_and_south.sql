@@ -147,7 +147,7 @@ MinLongitude AS (
     GROUP BY 
         osm_id,
         way
-)
+),
 
 --Filter out all of the curvy lake roads and other curvy roads
 Straightness AS (
