@@ -19,7 +19,7 @@ SelectArterials AS (
         NumberedRows
     WHERE
         rn % 3 = 0 OR min_longitude = next_long
-),
+)
 
 -- --Select living streets that already exists.
 -- SelectExistingVip AS (
