@@ -21,24 +21,24 @@ SelectArterials AS (
         rn % 3 = 0 OR min_longitude = next_long
 ),
 
---Select living streets that already exists.
-SelectExistingVip AS (
-    SELECT osm_id 
-    FROM planet_osm_line 
-    WHERE highway = 'living_street'
-),
+-- --Select living streets that already exists.
+-- SelectExistingVip AS (
+--     SELECT osm_id 
+--     FROM planet_osm_line 
+--     WHERE highway = 'living_street'
+-- ),
 
-SelectAll AS (
-    SELECT osm_id 
-    FROM SelectArterials
-    UNION ALL
-    SELECT osm_id 
-    FROM SelectExistingVip
-)
+-- SelectAll AS (
+--     SELECT osm_id 
+--     FROM SelectArterials
+--     UNION ALL
+--     SELECT osm_id 
+--     FROM SelectExistingVip
+-- )
 
 SELECT b.*
 from (SELECT
         osm_id
     FROM 
-        SelectAll) a
+        SelectArterials) a
 left join planet_osm_line b On a.osm_id=b.osm_id;
